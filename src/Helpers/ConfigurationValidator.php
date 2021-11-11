@@ -12,8 +12,8 @@ class ConfigurationValidator
         $feeds = $feeds ?? (array)config('feed.feeds', []);
 
         foreach ($feeds as $name => $config) {
-            if (! in_array($config['format'], ['atom', 'json', 'rss'])) {
-                throw InvalidConfiguration::unrecognizedFormat($name, $config['format']);
+            if (array_key_exists('format', $config) && ! in_array($config['format'], ['atom', 'json', 'rss'])) {
+                throw InvalidConfiguration::unrecognizedFormat($name,  $config['format'] );
             }
 
             if (! View::exists($config['view'] ?? 'feed::atom')) {
